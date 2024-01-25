@@ -6,7 +6,6 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import get_user_model
-from django.db.models import Q
 
 from .serializers import UserRegisterSerializer, UserLoginSerializer, UserLogoutSerializer
 
@@ -20,13 +19,12 @@ class UserRegisterAPIView(APIView):
         serializer = UserRegisterSerializer(data=request.data)
         if serializer.is_valid():
             email = serializer.validated_data.get('email')
-            username = serializer.validated_data.get('username')
             password = serializer.validated_data.get('password')
             
-            if User.objects.filter(Q(username__iexact=username) | Q(email__iexact=email)).exists():
-                return Response({'error': 'Username/Email already exists'}, status=status.HTTP_400_BAD_REQUEST)
+            if User.objects.filter(email__iexact=email).exists():
+                return Response({'error': 'User with Email already exists'}, status=status.HTTP_400_BAD_REQUEST)
             
-            user = User.objects.create_user(email=email, username=username, password=password)
+            user = User.objects.create_user(email=email, password=password)
             token, _ = Token.objects.get_or_create(user=user)
             
             return Response({'token': token.key}, status=status.HTTP_201_CREATED)

@@ -53,7 +53,7 @@ class ViewCartAPIView(APIView):
             cart = ShoppingCart.objects.get(user=request.user)
             cart_items = CartItem.objects.filter(cart=cart)
         except ShoppingCart.DoesNotExist:
-            return Response({'error': 'Cart not found'}, status=status.HTTP_404_NOT_FOUND)
+            cart_items = []
         
         serializer = CartItemSerializer(cart_items, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -80,6 +80,4 @@ class PurchaseBooksAPIView(APIView):
         # Get primary keys of cart items
         cart_item_ids = list(cart_items.values_list('id', flat=True))
         send_purchase_notification.delay(request.user.email, cart_item_ids)
-        
-        cart_items.delete()
         return Response({'message': 'Books purchased successfully'}, status=status.HTTP_200_OK)

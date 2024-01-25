@@ -19,5 +19,23 @@ services:
       POSTGRES_PASSWORD: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+  celery-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.celery
+    command: celery -A bookstore_api worker --loglevel=info
+    environment:
+      REDIS_HOST: redis
+    volumes:
+      - .:/project
+    depends_on:
+      - db
+      - web
+      - redis
+  
 volumes:
     postgres_data:

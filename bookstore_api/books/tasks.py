@@ -17,6 +17,8 @@ def send_purchase_notification(self, email, cart_item_ids):
     message = render_to_string('purchase_email_template.html', {'items': cart_items, "total": total})
     
     # Send email using send_mail function
-    send_mail(subject, message, recipient_list=[email], html_message=message)
+    send_mail(subject, message, from_email=None, recipient_list=[email], html_message=message)
+    
+    cart_items.delete()
     
     return "Email is sent"
