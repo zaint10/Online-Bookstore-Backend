@@ -28,8 +28,6 @@ services:
       context: .
       dockerfile: Dockerfile.celery
     command: celery -A bookstore_api worker --loglevel=info
-    environment:
-      REDIS_HOST: redis
     volumes:
       - .:/project
     depends_on:
