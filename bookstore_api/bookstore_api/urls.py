@@ -17,10 +17,23 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from accounts.views import UserRegisterAPIView, UserLoginAPIView, UserLogoutAPIView
+from books.views import AuthorListCreate, AuthorRetrieveUpdateDestroy, CategoryListCreate,\
+    CategoryRetrieveUpdateDestroy, BookListCreate, BookRetrieveUpdateDestroy,\
+    AddToCartAPIView, ViewCartAPIView, RemoveFromCartAPIView, PurchaseBooksAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/', UserRegisterAPIView.as_view()),
     path('login/', UserLoginAPIView.as_view()),
     path('logout/', UserLogoutAPIView.as_view()),
+    path('authors/', AuthorListCreate.as_view()),
+    path('authors/<int:pk>/', AuthorRetrieveUpdateDestroy.as_view()),
+    path('categories/', CategoryListCreate.as_view()),
+    path('categories/<int:pk>/', CategoryRetrieveUpdateDestroy.as_view()),
+    path('books/', BookListCreate.as_view()),
+    path('books/<int:pk>/', BookRetrieveUpdateDestroy.as_view()),
+    path('cart/add/<int:book_id>/', AddToCartAPIView.as_view()),
+    path('cart/view/', ViewCartAPIView.as_view()),
+    path('cart/remove/<int:cart_item_id>/', RemoveFromCartAPIView.as_view()),
+    path('cart/purchase/', PurchaseBooksAPIView.as_view()),
 ]
