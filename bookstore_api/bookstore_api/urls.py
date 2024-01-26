@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from accounts.views import UserRegisterAPIView, UserLoginAPIView, UserLogoutAPIView
+from accounts.views import UserRegisterAPIView, UserLoginAPIView, UserLogoutAPIView, CustomObtainAuthToken
 from books.views import AuthorListCreate, AuthorRetrieveUpdateDestroy, CategoryListCreate,\
     CategoryRetrieveUpdateDestroy, BookListCreate, BookRetrieveUpdateDestroy,\
     AddToCartAPIView, ViewCartAPIView, RemoveFromCartAPIView, PurchaseBooksAPIView
@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/', UserRegisterAPIView.as_view()),
     path('login/', UserLoginAPIView.as_view()),
+    path('api-token-auth/', CustomObtainAuthToken.as_view(), name='api_token_auth'),
     path('logout/', UserLogoutAPIView.as_view()),
     path('authors/', AuthorListCreate.as_view()),
     path('authors/<int:pk>/', AuthorRetrieveUpdateDestroy.as_view()),
