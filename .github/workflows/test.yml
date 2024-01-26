@@ -55,7 +55,7 @@ jobs:
     - name: Deploy to Docker Hub
       uses: docker/build-push-action@v2
       with:
-        context: .
+        context: bookstore_api
         push: true
         tags: online-book-store-backend:latest
       env:

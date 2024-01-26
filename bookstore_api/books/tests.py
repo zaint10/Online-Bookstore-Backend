@@ -3,8 +3,6 @@ from unittest.mock import patch
 from rest_framework.test import APIClient
 from rest_framework import status
 from django.contrib.auth import get_user_model
-from threading import Thread
-import time
 
 from books.models import Book, Author, Category, CartItem
 
