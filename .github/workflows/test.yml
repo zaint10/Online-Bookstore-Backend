@@ -26,11 +26,11 @@ jobs:
 
     - name: Run tests
       run: |
-        python manage.py test
+        python ./bookstore_api/manage.py test
 
     - name: Build Docker image
       run: |
-        docker build -t online-book-store-backend .
+        docker build -t online-book-store-backend ./bookstore_api
 
     - name: Deploy to Docker Hub
       uses: docker/build-push-action@v2
