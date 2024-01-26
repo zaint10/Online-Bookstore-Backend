@@ -22,17 +22,20 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r ./bookstore_api/requirements.txt
+        cd bookstore_api
+        pip install -r requirements.txt
 
     - name: Run tests
       env:
         DJANGO_SETTINGS_MODULE: bookstore_api.settings
       run: |
-        python ./bookstore_api/manage.py test
+        cd bookstore_api
+        python manage.py test
 
     - name: Build Docker image
       run: |
-        docker build -t online-book-store-backend ./bookstore_api
+        cd bookstore_api
+        docker build -t online-book-store-backend .
 
     - name: Deploy to Docker Hub
       uses: docker/build-push-action@v2
