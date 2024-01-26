@@ -25,6 +25,8 @@ jobs:
         pip install -r ./bookstore_api/requirements.txt
 
     - name: Run tests
+      env:
+        DJANGO_SETTINGS_MODULE: bookstore_api.settings
       run: |
         python ./bookstore_api/manage.py test
 
