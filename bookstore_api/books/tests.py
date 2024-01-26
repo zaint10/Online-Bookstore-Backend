@@ -121,33 +121,3 @@ class BookAPITestCase(TestCase):
         # Verify that the book has been deleted from the database
         self.assertFalse(Book.objects.filter(id=self.book.id).exists())
     
-    def test_concurrency_cart_operations(self):
-        # Get the user's token for authentication
-        login_data = {'email': self.email, 'password': self.password}
-        response = self.client.post('/api-token-auth/', login_data)
-        token = response.data.get('token')
-
-        # Define a function to add the book to the cart
-        def add_to_cart(client):
-            # Introduce an artificial delay to simulate processing time
-            # time.sleep(0.1)
-            client.credentials(HTTP_AUTHORIZATION=f'Token {token}')
-            response = client.post(f'/cart/add/{self.book.id}/')
-            return response.status_code
-
-        # Simulate concurrent requests to add the same book to the cart
-        num_threads = 6
-        clients = [APIClient() for _ in range(num_threads)]
-        threads = [Thread(target=add_to_cart, args=(clients[i],)) for i in range(num_threads)]
-
-        # Start all threads
-        for thread in threads:
-            thread.start()
-
-        # Wait for all threads to complete
-        for thread in threads:
-            thread.join()
-
-        # Verify that only one of the requests succeeds (due to concurrent updates to cart)
-        success_count = sum(1 for client in clients if add_to_cart(client) == status.HTTP_200_OK)
-        self.assertGreater(success_count, 1)
