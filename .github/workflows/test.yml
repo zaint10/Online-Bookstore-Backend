@@ -40,22 +40,9 @@ jobs:
       run: |
         cd bookstore_api
         echo "${{ secrets.PROJECT_ENV }}" > .env
-        echo "cat .env"
-        cat .env
-        echo "Value of SECRET_KEY:"
-        grep "SECRET_KEY" .env
-        echo "cat .env.local"
-        cat .env.local
-        echo "ls -a ."
-        ls -a .
     - name: Run migrations
       run: |
         cd bookstore_api
-        ls -a .
-        echo "cat .env"
-        cat .env
-        echo "cat .env.local"
-        cat .env.local
         python manage.py migrate
     - name: Run tests
       env:
