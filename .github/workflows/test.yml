@@ -40,6 +40,10 @@ jobs:
       run: |
         cd bookstore_api
         echo "${{ secrets.PROJECT_ENV }}" > .env
+        echo "cat .env"
+        cat .env
+        echo "ls -a ."
+        ls -a .
     - name: Run migrations
       run: |
         cd bookstore_api
