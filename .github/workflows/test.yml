@@ -38,7 +38,8 @@ jobs:
         pip install -r requirements.txt
     - name: 'Create env file'
       run: |
-        echo "$PROJECT_ENV" > .env
+        cd bookstore_api
+        echo "${{ secrets.PROJECT_ENV }}" > .env
     - name: Run migrations
       run: |
         cd bookstore_api
