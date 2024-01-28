@@ -44,6 +44,8 @@ jobs:
         cat .env
         echo "Value of SECRET_KEY:"
         grep "SECRET_KEY" .env
+        echo "cat .env.local"
+        cat .env.local
         echo "ls -a ."
         ls -a .
     - name: Run migrations
