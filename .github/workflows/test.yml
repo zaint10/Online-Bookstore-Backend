@@ -42,6 +42,8 @@ jobs:
         echo "${{ secrets.PROJECT_ENV }}" > .env
         echo "cat .env"
         cat .env
+        echo "Value of SECRET_KEY:"
+        grep "SECRET_KEY" .env
         echo "ls -a ."
         ls -a .
     - name: Run migrations
