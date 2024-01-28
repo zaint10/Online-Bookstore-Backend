@@ -1,0 +1,109 @@
+# Online Book Store API
+
+## Description
+
+The Online Book Store API is a Django-based web application that provides endpoints for managing books, users, and shopping carts. It allows users to browse, purchase, and manage their favorite books online.
+
+## Setup and Running Locally
+
+### Prerequisites
+
+- Python 3.9 or higher installed
+- Docker installed (for running with Docker)
+- PostgreSQL installed (for local database)
+
+### Installation Steps
+
+1. Clone the repository to your local machine:
+
+   ```bash
+   git clone https://github.com/your_username/online-book-store.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```basg
+   cd online-book-store
+   ```
+
+3. Install project dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Set up environment variables:
+   - Create a `.env` file in the project root directory.
+   - Define the following environment variables in the `.env` file:
+
+     ```env
+     DEBUG=True
+     DJANGO_SUPERUSER_EMAIL=admin@example.com
+     DJANGO_SUPERUSER_PASSWORD=admin
+     # Add other environment variables as needed
+     ```
+
+### Running with Docker
+
+1. Make sure Docker is installed on your system.
+
+2. Navigate to the project directory.
+
+3. Build the Docker image:
+
+   ```bash
+   docker build -t online-book-store .
+   ```
+
+4. Run the Docker container:
+
+   ```bash
+   docker run online-book-store
+   ```
+
+## API Endpoints
+
+### Books
+
+- **GET /api/books/**: Retrieve a list of all books.
+- **GET /api/books/{book_id}/**: Retrieve details of a specific book.
+- **POST /api/books/**: Create a new book entry.
+- **PUT /api/books/{book_id}/**: Update details of a specific book.
+- **DELETE /api/books/{book_id}/**: Delete a book.
+
+### Authors
+
+- **GET /api/authors/**: Retrieve a list of all authors.
+- **GET /api/authors/{author_id}/**: Retrieve details of a specific author.
+- **POST /api/authors/**: Create a new author entry.
+- **PUT /api/authors/{author_id}/**: Update details of a specific author.
+- **DELETE /api/authors/{author_id}/**: Delete an author.
+
+### Categories
+
+- **GET /api/categories/**: Retrieve a list of all categories.
+- **GET /api/categories/{category_id}/**: Retrieve details of a specific category.
+- **POST /api/categories/**: Create a new category entry.
+- **PUT /api/categories/{category_id}/**: Update details of a specific category.
+- **DELETE /api/categories/{category_id}/**: Delete a category.
+
+### Users
+
+- **POST /api/users/register/**: Register a new user.
+- **POST /api/users/login/**: User login with credentials.
+- **POST /api/users/logout/**: User logout.
+
+### Cart
+
+- **GET /api/cart/view/**: View the user's shopping cart.
+- **POST /api/cart/add/{book_id}/**: Add a book to the shopping cart.
+- **DELETE /api/cart/remove/{cart_item_id}/**: Remove a book from the shopping cart.
+- **POST /api/cart/purchase/**: Purchase books in the shopping cart.
+
+## Celery and Email Sending
+
+The application uses Celery for asynchronous task processing. After a successful purchase, an email notification is sent to the user's registered email address confirming the purchase.
+
+## Schema Design
+
+The database schema follows a relational design with tables for books, authors, categories, users, and shopping carts. Relationships between these entities are established using foreign key constraints.
