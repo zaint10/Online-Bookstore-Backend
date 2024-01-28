@@ -3,20 +3,23 @@ version: '3'
 
 services:
   web:
-    build: .
-    command: python /project/manage.py runserver 0.0.0.0:8000
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    env_file:
+      .env
+    command: sh -c "chmod +x /project/migrate.sh && sh /project/migrate.sh && sh /project/entrypoint.sh"
     volumes:
       - .:/project
     depends_on:
       - db
+      - redis
   db:
     image: postgres
-    environment:
-      POSTGRES_DB: bookstore_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+    env_file:
+      .env
     volumes:
       - postgres_data:/var/lib/postgresql/data/
   redis:
@@ -27,6 +30,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.celery
+    env_file:
+      .env
     command: celery -A bookstore_api worker --loglevel=info
     volumes:
       - .:/project

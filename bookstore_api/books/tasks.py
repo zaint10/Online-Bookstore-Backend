@@ -1,4 +1,3 @@
-# books/tasks.py
 from celery import shared_task
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -7,6 +6,9 @@ from books.models import CartItem
 
 @shared_task(bind=True)
 def send_purchase_notification(self, email, cart_item_ids):
+    """
+    Task for sending purchase notification email to the user.
+    """
     # Retrieve cart items using primary keys
     cart_items = CartItem.objects.filter(id__in=cart_item_ids)
     
