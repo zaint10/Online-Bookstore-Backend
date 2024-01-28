@@ -52,6 +52,7 @@ jobs:
       run: |
         cd bookstore_api
         ls -a .
+        echo "cat .env.local"
         python manage.py migrate
     - name: Run tests
       env:
