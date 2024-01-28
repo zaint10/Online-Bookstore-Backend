@@ -51,6 +51,7 @@ jobs:
     - name: Run migrations
       run: |
         cd bookstore_api
+        ls -a .
         python manage.py migrate
     - name: Run tests
       env:
